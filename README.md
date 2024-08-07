@@ -50,10 +50,12 @@ Agora com os dados na camada bronze, o pipeline executa o segundo notebook, que 
 ## 3) Setando os jobs
 Agora que os dois notebooks responsáveis pelas etapas do Pipeline estão desenvolvidos, é necessário criar os Jobs no Databricks que irão executar os notebooks.
 
-Job Notebook 1
+Job Notebook 1:
+
 ![databricks](https://github.com/user-attachments/assets/733dc142-13e0-473e-ba11-4ec5c8860118)
 
-Job Notebook 2
+Job Notebook 2:
+
 ![job transformar](https://github.com/user-attachments/assets/493ee2ec-a321-48bf-a283-26449802f1fe)
 
 ## 4) Orquestração do Pipeline com Airflow
@@ -67,7 +69,7 @@ Esta DAG é executada todo dia as 12 horas e 10 minutos (o schedule_interval pod
 
 ![DAG](https://github.com/user-attachments/assets/36e06d10-0575-4dac-adae-13d8ad5186fe)
 
-### Histórico da execução da DAG
+### Histórico da execução da DAG:
 
 ![Airflow](https://github.com/user-attachments/assets/727fa363-daaf-428e-9197-d0098b34833a)
 
