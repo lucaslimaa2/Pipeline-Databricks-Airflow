@@ -8,7 +8,7 @@ A stack utilizada foi:
 - Python e Pyspark
 - Apache Airflow
 
-## 1) Extração de dados
+## 1) Extração de dados e carregamento na camada Bronze
 O primeiro passo do projeto foi desenvolver um notebook no Databricks para realizar uma requisição da API da Exchange Rates, transformar os dados e salvar na camada bronze.
 
 Foram desenvolvidas 3 funções no primeiro notebook para: 
@@ -30,9 +30,44 @@ Foram desenvolvidas 3 funções no primeiro notebook para:
 
 O parâmetro 'data_execucao' na primeira função é o dia atual da execução do notebook, este parâmetro será configurado no Airflow posteriormente.
 
-## 2) Transformação dos dados
-Agora com os dados na camada bronze, o pipeline executa o segundo notebook, que irá ler, processar e modelar os dados no formato final desejado utilizando a linguagem PySpark.
+### Os dados são armazenados na camada bronze particionados por dia, como mostra a imagem abaixo:
+![bronze](https://github.com/user-attachments/assets/e544bfbb-cac6-469b-9a38-6e28ed3daa31)
+
+
+## 2) Transformação dos dados e carregamento na camada Silver
+Agora com os dados na camada bronze, o pipeline executa o segundo notebook, que irá ler todos os arquivos de todos os dias, processar e modelar os dados para o formato final desejado utilizando a linguagem PySpark.
 
 ![image](https://github.com/user-attachments/assets/f8dd5fe1-476c-4b8a-aca4-78fa3c6c26ab)
 ![image](https://github.com/user-attachments/assets/90a22822-a683-40df-ab0b-6ffd627df64f)
 ![image](https://github.com/user-attachments/assets/26577763-a2ee-49cf-8f67-9bad9bd44557)
+
+### Este é dataframe final que será armazenado diariamente na camada Silver:
+![Dataframe final](https://github.com/user-attachments/assets/06ba8296-4f3d-4520-a9d4-f3d6cf49332d)
+
+## Repositórios no DBFS:
+![Silver](https://github.com/user-attachments/assets/f2827155-f07c-4773-8cc6-33a368bbd101)
+
+## 3) Setando os jobs
+Agora que os dois notebooks responsáveis pelas etapas do Pipeline estão desenvolvidos, é necessário criar os Jobs no Databricks que irão executar os notebooks.
+
+Notebook 1
+![databricks](https://github.com/user-attachments/assets/733dc142-13e0-473e-ba11-4ec5c8860118)
+
+Notebook 2
+C:\Users\anton\OneDrive\Área de Trabalho\Databricks\Databricks e Airflow\job transformar.png
+
+## 4) Orquestração do Pipeline com Airflow
+Primeiramente, as devidas conexões do Airflow com o Databricks foram realizadas. Neste projeto, executei o Airflow no modo Standalone em um ambiente virtual do Ubuntu.
+
+![image](https://github.com/user-attachments/assets/20b5f428-88e9-47ee-8161-8377b21ec53e)
+
+### Com o Airflow sendo executado sem problemas, a DAG vou desenvolvida para executar os dois jobs, que por sua vez, executarão os notebooks.
+
+### Esta DAG é executada todo dia as 12 horas e 10 minutos (o schedule_interval poderia ser trocado somente por "@daily"). Além disso, o parâmetro 'execution_date' é a data atual em que a DAG está sendo executada, e esse parâmetro é transferido para o Databricks, pois ele é necessário na função de extração dos dados da API.
+
+![DAG](https://github.com/user-attachments/assets/36e06d10-0575-4dac-adae-13d8ad5186fe)
+
+### Histórico da execução da DAG
+
+![Airflow](https://github.com/user-attachments/assets/727fa363-daaf-428e-9197-d0098b34833a)
+
