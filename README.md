@@ -12,7 +12,7 @@ A stack utilizada foi:
 O primeiro passo do projeto foi desenvolver um notebook no Databricks para realizar uma requisição da API da Exchange Rates, transformar os dados e salvar na camada bronze.
 
 Foram desenvolvidas 3 funções no primeiro notebook para: 
-a) Realizar uma requisição do tipo GET:
+# a) Realizar uma requisição do tipo GET:
 
 ![image](https://github.com/user-attachments/assets/519c3a60-d808-4b2d-b1d9-119a9db49f9e)
 
