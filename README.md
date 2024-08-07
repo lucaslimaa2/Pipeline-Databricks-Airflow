@@ -13,16 +13,21 @@ O primeiro passo do projeto foi desenvolver um notebook no Databricks para reali
 
 Foram desenvolvidas 3 funções no primeiro notebook para: 
 a) Realizar uma requisição do tipo GET:
+
 ![image](https://github.com/user-attachments/assets/519c3a60-d808-4b2d-b1d9-119a9db49f9e)
 
-b) Transformar os dados do formato json para um dataframe
+b) Transformar os dados do formato json para um dataframe:
+
 ![image](https://github.com/user-attachments/assets/d6394854-f556-4bac-bed8-ace69b1c11f9)
 
-c) Criar a pasta no Databricks File System (DBFS), chamar a função do item 'b' para converter o formato dos dados para um dataframe, renomear colunas, criar coluna de data e, por fim, escrever o arquivo no formato parquet na camada bronze. 
+c) Criar a pasta no Databricks File System (DBFS), chamar a função do item 'b' para converter o formato dos dados para um dataframe, renomear colunas, criar coluna de data e, por fim, escrever o arquivo no formato parquet na camada bronze:
+
 ![image](https://github.com/user-attachments/assets/ef59b0cd-ac96-4e8f-961b-efd0db8bcb42)
 
 Chamando as funções:
+
 ![image](https://github.com/user-attachments/assets/962c1e1b-f365-414a-bd2e-958c42ac69d6)
+
 O parâmetro 'data_execucao' na primeira função é o dia atual da execução do notebook, este parâmetro será configurado no Airflow posteriormente.
 
 ## 2) Transformação dos dados
